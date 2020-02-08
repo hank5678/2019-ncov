@@ -16,7 +16,7 @@ export default memo(function AreaListPanel() {
               .sort((a, b) => b.confirmedCount - a.confirmedCount)
               .map((el, id) => (
                 <li key={id} style={{ marginBottom: 4 }}>
-                  {el.country === "中國" && el.provinceShortName !== "台灣" ? "中國 " : ""}
+                  {el.country === "中國" && el.provinceName !== "台灣" ? "中國 " : ""}
                   {el.provinceName} （{el.confirmedCount}）
                 </li>
               ))}

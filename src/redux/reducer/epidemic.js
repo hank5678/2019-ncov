@@ -8,6 +8,7 @@ export default (state = DEFAULT_STATE, action) => {
     case SET_EPIDMIC:
       return action.payload.map(el => ({
         key: el.provinceShortName,
+        apiKey: el.provinceName,
         country: tify(el.country),
         provinceName: tify(el.provinceShortName),
         confirmedCount: el.confirmedCount,

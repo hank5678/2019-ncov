@@ -23,7 +23,7 @@ export default memo(function LastUpdateLightBox({ visible, close, lastUpdateInfo
           .map((el, id) => {
             return (
               <li key={id} style={{ marginBottom: 4 }}>
-                {el.country === "中國" && el.provinceShortName !== "台灣" ? "中國 " : ""}
+                {el.country === "中國" && el.provinceName !== "台灣" ? "中國 " : ""}
                 {el.provinceName} （{el.confirmedCount}）
               </li>
             )

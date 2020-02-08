@@ -87,7 +87,7 @@ export default memo(function EpidemicMap() {
     key => {
       const target = epidemic.find(el => el.key === key)
       if (target) {
-        return target.provinceName
+        return target.apiKey
       } else {
         return ""
       }
