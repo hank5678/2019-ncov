@@ -30,12 +30,14 @@ export const InfoBox = styled.div`
   border: 1px solid #000000;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
 `
+
 export const InfoTitle = styled.p`
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 4px;
   color: #17f81a;
 `
+
 export const InfoLastUpdateText = styled.p`
   font-size: 10px;
   margin-bottom: 8px;
@@ -67,19 +69,19 @@ export const Button = styled.button`
 
 const move = keyframes`
   from {
-    background-position-y: 0px;
+    transform: translateY(0px);
   }
   to {
-    background-position-y: 4px;
+    transform: translateY(4px);
   }
 `
 
 export const Overlay = styled.div`
   position: fixed;
-  top: 0;
+  top: -4px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 4px);
   background: linear-gradient(#000000 50%, transparent 50%);
   background-size: 100% 4px;
   background-repeat: repeat;

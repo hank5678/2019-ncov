@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback, memo } from "react"
 import loadGoogleMapsApi from "load-google-maps-api"
 import * as topojson from "topojson-client"
-import { useMouse, useWindowSize } from "react-use"
+// import { useMouse, useWindowSize } from "react-use"
 
 import ReactGA from "react-ga"
 import moment from "moment"
 
-import { MapContainer, InfoBoxBg, InfoBox, Title, Text, CloseBtn } from "./styled"
+import { MapContainer } from "./styled"
 
 import AreaStatisticsLightBox from "../AreaStatisticsLightBox/"
+import MapInfoBox from "../MapInfoBox"
 import { getAreaEpidemicAsync } from "api"
 
 import { setLoading } from "redux/action/loading"
@@ -63,13 +64,10 @@ export default memo(function EpidemicMap() {
   const epidemic = useSelector(state => state.epidemic)
   const map = useRef()
   const mapContainerRef = useRef(null)
-  const { docX, docY } = useMouse(mapContainerRef)
-  const { width, height } = useWindowSize()
   const [focusArea, setFocusArea] = useState({})
   const [areaDailyEpidemic, setAreaDailyEpidemic] = useState([])
   const [statisticsVisible, setStatisticsVisible] = useState(false)
   const [statisticsAreaName, setStatisticsAreaName] = useState("")
-  // const [, setLoading] = useContext(LoadingContext)
 
   const getEpidEmicData = useCallback(
     key => {
@@ -276,18 +274,7 @@ export default memo(function EpidemicMap() {
   return (
     <div>
       <MapContainer ref={mapContainerRef} />
-      {focusArea.key && (
-        <>
-          {width <= 768 && <InfoBoxBg />}
-          <InfoBox x={width > 768 ? docX : width / 2} y={width > 768 ? docY : height / 2}>
-            <Title>{focusArea.name}</Title>
-            <Text>確診：{focusArea.data.confirmedCount ? focusArea.data.confirmedCount : 0}</Text>
-            <Text>治癒：{focusArea.data.curedCount ? focusArea.data.curedCount : 0}</Text>
-            <Text>死亡：{focusArea.data.deadCount ? focusArea.data.deadCount : 0}</Text>
-            {width <= 768 && <CloseBtn onClick={clearFocusArea} />}
-          </InfoBox>
-        </>
-      )}
+      <MapInfoBox mapContainerRef={mapContainerRef} focusArea={focusArea} clearFocusArea={clearFocusArea} />
       <AreaStatisticsLightBox visible={statisticsVisible} close={closeStatistics} dailyEpidemic={areaDailyEpidemic} areaName={statisticsAreaName} />
     </div>
   )

@@ -30,7 +30,6 @@ import {
   ChartPanel,
   MarqueeContainer,
   Overlay,
-  BoxShadow,
   Copyright,
   Link,
   ApiErrorMessage,
@@ -189,7 +188,6 @@ export default function App() {
         </>
       )}
       <Overlay />
-      <BoxShadow />
       <Copyright>
         <p>
           本專案無商業盈利，為學習與研究目的而設計製作，有任何問題請聯繫
