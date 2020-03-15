@@ -36,7 +36,7 @@ import {
   ApiErrorMessageText
 } from "./styled"
 
-import { datasetStyle1, datasetStyle2 } from "config/chartDatasetStyle"
+import { datasetStyle1 } from "config/chartDatasetStyle"
 
 const chartPanelOptions = {
   legend: {
@@ -89,18 +89,14 @@ export default function App() {
   }, [overall])
 
   const panelChartData = useMemo(() => {
+    const lastWeekOverall = overall.filter((el, id) => id > overall.length - 8)
     return {
-      labels: overall.map(el => moment(el.updateTime).format("M/D")),
+      labels: lastWeekOverall.map(el => moment(el.updateTime).format("M/D")),
       datasets: [
         {
           label: "確診",
-          data: overall.map(el => el.confirmedCount),
+          data: lastWeekOverall.map(el => el.confirmedCount),
           ...datasetStyle1
-        },
-        {
-          label: "疑似",
-          data: overall.map(el => el.suspectedCount),
-          ...datasetStyle2
         }
       ]
     }

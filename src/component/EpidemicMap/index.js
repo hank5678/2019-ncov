@@ -177,7 +177,9 @@ export default memo(function EpidemicMap() {
           map.current.data.addGeoJson(worldGeoJson)
           map.current.data.addGeoJson(chinaGeoJson)
           map.current.data.setStyle(feature => {
-            const target = epidemic.find(el => el.key === feature.i.key)
+            // console.log(epidemic)
+            // console.log(feature)
+            const target = epidemic.find(el => el.key === feature.j.key)
             const confirmedCount = target ? target.confirmedCount : 0
             const fillOpacity = getFillOpacity(confirmedCount, confirmedCountAverage, confirmedCountMax)
             return {
@@ -196,9 +198,9 @@ export default memo(function EpidemicMap() {
 
           map.current.data.addListener("click", event => {
             if (window.innerWidth > 768) {
-              if (getEpidEmicData(event.feature.i.key).confirmedCount > 0) {
+              if (getEpidEmicData(event.feature.j.key).confirmedCount > 0) {
                 dispatch(setLoading(true))
-                getAreaEpidemicAsync({ province: getProvinceName(event.feature.i.key) })
+                getAreaEpidemicAsync({ province: getProvinceName(event.feature.j.key) })
                   .then(res => {
                     if (res.data.success) {
                       setAreaDailyEpidemic(
@@ -219,7 +221,7 @@ export default memo(function EpidemicMap() {
                           .sort((a, b) => a.updateTime - b.updateTime)
                       )
                       setStatisticsVisible(true)
-                      setStatisticsAreaName(event.feature.i.name)
+                      setStatisticsAreaName(event.feature.j.name)
                       ReactGA.pageview("areaStatistics")
                     }
                   })
@@ -232,16 +234,16 @@ export default memo(function EpidemicMap() {
 
           map.current.data.addListener("mousedown", event => {
             if (window.innerWidth <= 768) {
-              const data = getEpidEmicData(event.feature.i.key)
-              setFocusArea({ ...event.feature.i, data })
+              const data = getEpidEmicData(event.feature.j.key)
+              setFocusArea({ ...event.feature.j, data })
             }
           })
 
           map.current.data.addListener("mouseover", event => {
             if (window.innerWidth > 768) {
-              const data = getEpidEmicData(event.feature.i.key)
+              const data = getEpidEmicData(event.feature.j.key)
               if (data.confirmedCount > 0) {
-                setFocusArea({ ...event.feature.i, data })
+                setFocusArea({ ...event.feature.j, data })
               }
             }
           })
